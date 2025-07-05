@@ -3,7 +3,7 @@ import logging
 import ssl
 import os
 
-server_address = ('localhost', 8885)
+server_address = ('localhost', 8889)
 # ganti port 8889 untuk process pool
 
 def make_socket(destination_address='localhost', port=12000):
@@ -84,12 +84,9 @@ def send_delete(filename):
 
 # Main logic
 if __name__ == '__main__':
-    print("=== File di Server ===")
-    hasil = send_list()
-    print(hasil)
 
     while True:
-        perintah = input("Masukkan perintah (upload <filename> / delete <filename> / exit): ").strip()
+        perintah = input("Masukkan perintah 'list' atau 'upload <filename>' atau 'delete <filename>' atau 'exit'): ").strip()
 
         if perintah.lower() == 'exit':
             print("Keluar dari program.")
@@ -112,6 +109,10 @@ if __name__ == '__main__':
             print("\n[HASIL DELETE]:")
             print(hasil)
 
-        print("\n=== File di Server (Update) ===")
-        hasil = send_list()
-        print(hasil)
+        elif perintah.startswith('list'):
+            print("\n=== File di Server ===")
+            hasil = send_list()
+            print(hasil)
+        
+        else:
+            print("Perintah tidak dikenali. Gunakan 'list', 'upload <filename>', 'delete <filename>', atau 'exit'.")
